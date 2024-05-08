@@ -24,9 +24,9 @@ class Push {
     message: Message;
     pushTokens: Array<string>;
   }): Promise<void> {
-    const messages: Array<Message & {
+    const messages: Array<{
       to: string;
-    }> = [];
+    } & Message> = [];
 
     pushTokens.forEach((pushToken: string) => {
       if (Expo.isExpoPushToken(pushToken)) {
