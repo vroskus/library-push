@@ -10,6 +10,9 @@ import type {
 
 export type $Message = Message;
 
+const zeroValue: number = 0;
+const oneValue: number = 1;
+
 class Push {
   expo: Expo;
 
@@ -24,9 +27,9 @@ class Push {
     message: Message;
     pushTokens: Array<string>;
   }): Promise<void> {
-    const messages: Array<{
+    const messages: Array<Message & {
       to: string;
-    } & Message> = [];
+    }> = [];
 
     pushTokens.forEach((pushToken: string) => {
       if (Expo.isExpoPushToken(pushToken)) {
@@ -39,7 +42,7 @@ class Push {
 
     const chunks = this.expo.chunkPushNotifications(messages);
 
-    for (let index = 0; index < chunks.length; index += 1) {
+    for (let index = zeroValue; index < chunks.length; index += oneValue) {
       await this.expo.sendPushNotificationsAsync(chunks[index]);
     }
   }
